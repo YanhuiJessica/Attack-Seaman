@@ -4,7 +4,7 @@
 
 - MITRE ATT&CK Navigator 层文件存储格式为 JSON
 - 以 JSON 格式从 [ATT&CK® Navigator](https://mitre-attack.github.io/attack-navigator/) 中导出任意编辑后的矩阵，由于技能点不能增删，JSON 文件将会标记使用的矩阵模板，并记录编辑后与原矩阵的差异部分
-    ```json
+    ```js
     {
         "name": "layer",
         "versions": {
