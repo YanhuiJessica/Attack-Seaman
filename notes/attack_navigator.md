@@ -77,3 +77,12 @@
 - 提供的样例：[simple_input.csv](https://github.com/mitre-attack/attack-navigator/blob/master/layers/data/csv/simple_input.csv)
   - 包含列：`TechID`、`Software`、`Groups`、`References`
 - 脚本 [attack_layers_simple.py](https://github.com/mitre-attack/attack-navigator/blob/master/layers/attack_layers/attack_layers_simple.py) 比较简单，读入 CSV 文件，计算分值（使用数值、计算的方法自定义）并添加到记录层信息的变量中
+
+
+## Mitre Att&ck Tips
+- As long as a sub-techniques conceptually falls under a technique
+(e.g. sub-techniques that are conceptually a type of process injection will be under process
+injection), each sub-technique can contribute to which tactics a technique is a part of but are not
+required to fulfill every parent technique’s tactic (i.e. the Process Hollowing sub-technique can
+be used for Defense Evasion but not Privilege Escalation even though the Process Injection
+technique covers both tactics).
