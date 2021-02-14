@@ -126,7 +126,7 @@ func main() {
 }
 ```
 
-### Type conversions
+### Type
 
 - 类型转换只能是**显式**地
 - `T(v)`将`v`的类型转换为`T`
@@ -135,4 +135,57 @@ func main() {
 i := 42
 f := float64(i)
 u := uint(f)
+```
+
+- 当变量声明的右侧是确定的类型，新变量与其类型相同
+    ```go
+    var i int
+    j := i // j is an int
+    ```
+- 当变量声明的右侧是不确定类型的数值常量，新变量的类型取决于数值常量的精度
+    ```go
+    i := 42           // int
+    f := 3.142        // float64
+    g := 0.867 + 0.5i // complex128
+    ```
+
+## Constants
+
+```go
+const exp = "Example declaration"
+// 不能使用 := 定义常量
+```
+
+未定义类型的常量的类型取决于其内容。
+
+## Flow control statements
+
+```go
+// e.g. for
+sum := 0
+for i := 0; i < 10; i++ {
+    sum += i
+}
+
+// e.g. for as while
+i := 0
+for i < 10 {
+    i += i
+}
+
+// e.g. forever
+for {
+}
+
+// e.g. if
+if sum < 10 {
+    sum += 1
+}
+
+// e.g. if with a short statement
+if x := sum; x < i {
+    sum = i
+} else {
+    i = sum
+}
 ```
