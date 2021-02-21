@@ -35,7 +35,7 @@ type KillChainPhase struct {
 	PhaseName     string `bson:"phase_name" json:"phase_name" `
 }
 
-type BaseTactic struct {
+type BaseStix struct {
 	Base               `bson:",inline"`
 	Name               string              `bson:"name" json:"name"`
 	Description        string              `bson:"description" json:"description"`
@@ -43,12 +43,12 @@ type BaseTactic struct {
 }
 
 type XMitreTactic struct {
-	BaseTactic      `bson:",inline"`
+	BaseStix        `bson:",inline"`
 	XMitreShortName string `bson:"x_mitre_shortname" json:"x_mitre_shortname"`
 }
 
 type AttackPattern struct {
-	BaseTactic                `bson:",inline"`
+	BaseStix                  `bson:",inline"`
 	KillChainPhases           []KillChainPhase `bson:"kill_chain_phases" json:"kill_chain_phases"`
 	XMitreIsSubtechnique      bool             `bson:"x_mitre_is_subtechnique" json:"x_mitre_is_subtechnique"`
 	XMitreVersion             string           `bson:"x_mitre_version,omitempty" json:"x_mitre_version,omitempty"`
@@ -61,7 +61,7 @@ type AttackPattern struct {
 // New is
 func (ap *AttackPattern) New() *AttackPattern {
 	return &AttackPattern{
-		BaseTactic:                ap.BaseTactic,
+		BaseStix:                  ap.BaseStix,
 		KillChainPhases:           ap.KillChainPhases,
 		XMitreVersion:             ap.XMitreVersion,
 		XMitreIsSubtechnique:      ap.XMitreIsSubtechnique,
@@ -83,8 +83,8 @@ func (r *Relationship) New() *Relationship {
 }
 
 // New is
-func (b *BaseTactic) New() *BaseTactic {
-	return &BaseTactic{
+func (b *BaseStix) New() *BaseStix {
+	return &BaseStix{
 		Base:               b.Base,
 		Name:               b.Name,
 		Description:        b.Description,

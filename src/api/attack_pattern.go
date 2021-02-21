@@ -2,7 +2,10 @@ package api
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"net/http"
+	"os/exec"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -129,6 +132,12 @@ func (a *AttackPatternAPI) GetAttackPatternByID(ctx *gin.Context) {
 
 // UpdateAttackPatternByID returns the attackPattern by id
 func (a *AttackPatternAPI) UpdateAttackPatternByID(ctx *gin.Context) {
+	_, err := exec.Command("/bin/sh", "/app/tools/update.sh").Output()
+	if err != nil {
+		fmt.Println(err)
+		log.Fatal(err)
+	}
+	fmt.Println("成功啦！")
 	withID(ctx, "id", func(id string) {
 		var attackPattern = model.AttackPattern{}
 		abort := errors.New("attackPattern does not exist")

@@ -80,6 +80,25 @@
 
 
 ## Mitre Att&ck Tips
+
+### Bundle 
+
+https://docs.oasis-open.org/cti/stix/v2.0/csprd01/part1-stix-core/stix-v2.0-csprd01-part1-stix-core.html
+
+### Identifier
+
+An identifier universally and uniquely identifies a SDO, SRO, Bundle, or Marking Definition. Identifiers MUST follow the form [object-type]--[UUIDv4], where [object-type] is the exact value (all type names are lowercase strings, by definition) from the type property of the object being identified or referenced and where the [UUIDv4] is an RFC 4122-compliant Version 4 UUID. The UUID MUST be generated according to the algorithm(s) defined in RFC 4122, section 4.4 (Version 4 UUID) [RFC4122].
+
+The JSON MTI serialization uses the JSON string type [RFC7159] when representing identifier.
+
+```json
+2.4.1 Examples
+{
+  "type": "indicator",
+  "id": "indicator--e2e1a340-4415-4ba8-9671-f7343fbf0836",
+}
+```
+  
 - As long as a sub-techniques conceptually falls under a technique
 (e.g. sub-techniques that are conceptually a type of process injection will be under process
 injection), each sub-technique can contribute to which tactics a technique is a part of but are not

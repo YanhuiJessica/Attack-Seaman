@@ -1,0 +1,4 @@
+FROM mongo
+
+COPY enterprise-attack.json /tmp/enterprise-attack.json
+CMD mongoimport --host mongodb -u attackSeaman -p cuccs1sgreat  --db attackSeaman --collection mitre_attack --type json --file /tmp/enterprise-attack.json --jsonArray

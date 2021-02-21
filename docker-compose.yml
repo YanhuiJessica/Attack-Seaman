@@ -1,0 +1,59 @@
+version: "3.7"
+services:
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - web
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: unless-stopped
+    command: mongod --auth
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "attackSeaman"
+      MONGO_INITDB_ROOT_PASSWORD: "cuccs1sgreat"
+      MONGO_INITDB_DATABASE: attackSeaman
+      MONGODB_DATA_DIR: /data/db
+    volumes:
+      - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - web
+
+  mongo_seed:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: mongo_seed
+    links:
+      - mongodb
+    networks:
+      - web
+    depends_on:
+      - mongodb
+
+  api:
+    container_name: api
+    # Configuration for building the docker image for the service
+    build:
+      context: ./src # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+    ports:
+      - 6868:6868 # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: unless-stopped
+    networks:
+      - web # Networks to join (Services on the same network can communicate with each other using their name)
+
+networks:
+  web:
+    driver: bridge
