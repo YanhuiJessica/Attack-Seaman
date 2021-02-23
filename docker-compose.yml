@@ -31,19 +31,19 @@ services:
       - web
 
   mongo_seed:
-    build:
-      context: ./database
-      dockerfile: Dockerfile
     container_name: mongo_seed
+    image: mongo
     links:
       - mongodb
     networks:
       - web
-    depends_on:
-      - mongodb
+    volumes:
+      - ./database:/database
+    command:
+      /bin/sh /database/import.sh
 
-  api:
-    container_name: api
+  app:
+    container_name: app
     # Configuration for building the docker image for the service
     build:
       context: ./src # Use an image built from the specified dockerfile in the current directory.
