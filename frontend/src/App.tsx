@@ -1,12 +1,12 @@
 import React from 'react';
 import UserIcon from '@material-ui/icons/Group';
-import { Admin, Resource,EditGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 import Dashboard from './Dashboard';
 import { AttackPatternList,AttackPatternEdit ,AttackPatternCreate } from './AttackPatterns';
 import { RelationshipCreate,RelationshipEdit,RelationshipList } from "./Relationship";
 
-const dataProvider = jsonServerProvider("http://127.0.0.1:6868");
+const dataProvider = jsonServerProvider("http://localhost:6868");
 const Title = () => (<div>Mitre_attack</div>)
 
 const App = () => (
