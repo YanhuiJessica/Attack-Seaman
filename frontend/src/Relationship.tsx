@@ -102,7 +102,10 @@ const RelationshipForm = (props: any) => {
         />
       </ReferenceInput>
 
-      <TextInput source="relationship_type" label="relationship_type" />
+      <SelectInput source="relationship_type" label="relationship_type"   choices={RelationShipTypes}
+      optionText="relationship_type"
+      optionValue="relationship_type"
+      defaultValue="subtechnique-of" />
     </SimpleForm>
   );
 };

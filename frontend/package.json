@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "24.0.15",
     "@types/node": "12.6.2",
     "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
     "ra-data-json-server": "^2.9.2",
     "react": "^16.8.6",
-    "react-admin": "^2.9.2",
+    "react-admin": "3.8.4",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
+    "react-scripts": "4.0.3",
     "typescript": "^3.9.7"
   },
   "scripts": {
