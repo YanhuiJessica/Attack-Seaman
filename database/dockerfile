@@ -1,0 +1,9 @@
+FROM mongo
+
+COPY enterprise-attack.json /tmp/enterprise-attack.json
+
+CMD mongoimport --host mongodb --db attackSeaman --collection mitre_attack --type json --file /tmp/enterprise-attack.json --jsonArray
+CMD mongo --host mongodb --eval "db.mitre_attack.find().forEach(function(doc){doc.created = new Date(doc.created);db.mitre_attack.save(doc)});"
+CMD mongo --host mongodb --eval "db.mitre_attack.find().forEach(function(doc){doc.modified = new Date(doc.modified);db.mitre_attack.save(doc)});"
+
+# # -u attackSeaman -p cuccs1sgreat

@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-
 	"github.com/zGina/Attack-Seaman/src/api"
 	"github.com/zGina/Attack-Seaman/src/config"
 	"github.com/zGina/Attack-Seaman/src/database"

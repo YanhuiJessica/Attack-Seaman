@@ -135,6 +135,7 @@ func (d *TenDatabase) GetAttackPatternByID(id string) *model.AttackPattern {
 
 // UpdateAttackPattern updates a attackPattern.
 func (d *TenDatabase) UpdateAttackPattern(attackPattern *model.AttackPattern) *model.AttackPattern {
+
 	attackPattern.Modified = time.Now()
 	result := d.DB.Collection("mitre_attack").
 		FindOneAndReplace(context.Background(),

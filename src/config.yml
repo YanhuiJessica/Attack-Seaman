@@ -8,10 +8,10 @@ server:
     Access-Control-Allow-Credentials: "true"
     Access-Control-Allow-Headers: "content-type"
     Access-Control-Allow-Methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
-    Access-Control-Allow-Origin: "127.0.0.1"
+    Access-Control-Allow-Origin: "*"
     Access-Control-Expose-Headers: "X-Total-Count"
 
 database: # for database see (configure database section)
-  dbname: qi
-  connection: mongodb://localhost:27017
+  dbname: attackSeaman
+  connection: mongodb://attackSeaman:cuccs1sgreat@mongodb:27017
 
