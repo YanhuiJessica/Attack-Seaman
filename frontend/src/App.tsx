@@ -4,7 +4,7 @@ import jsonServerProvider from 'ra-data-json-server';
 import { AttackPatternList,AttackPatternEdit ,AttackPatternCreate } from './AttackPatterns';
 import { RelationshipCreate,RelationshipEdit,RelationshipList } from "./Relationship";
 
-const dataProvider = jsonServerProvider("http://localhost:6868");
+const dataProvider = jsonServerProvider("http://attack-seaman.com:6868");
 const Title = () => (<div>Mitre Attack</div>)
 
 const App = () => (
