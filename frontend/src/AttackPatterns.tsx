@@ -34,7 +34,7 @@ export const AttackPatternList = (props: any) => {
           label="STIX_ID"
           source="external_references[0].external_id"
         />
-        <UrlField source="external_references[0].url" />
+        <UrlField label="References" source="external_references[0].url" />
         <EditButton />
       </Datagrid>
     </List>
@@ -85,7 +85,7 @@ const AttackPatternForm = (props: any) => {
 
       <ArrayInput label="x_mitre_platforms" source="x_mitre_platforms"  validate={required()} >
         <SimpleFormIterator>
-          <TextInput />
+          <TextInput label="x_mitre_platform"/>
         </SimpleFormIterator>
       </ArrayInput>
 
