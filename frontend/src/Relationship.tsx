@@ -8,16 +8,11 @@ import {
   ReferenceInput,
   TextField,
   ReferenceField,
-  BooleanInput,
   Edit,
   SimpleForm,
   TextInput,
-  DateInput,
-  ArrayInput,
-  SimpleFormIterator,
   Create,
 } from "react-admin";
-import MyUrlField from "./MyUrlField";
 
 const RelationShipTypes = [
   { relationship_type: "uses" },
@@ -42,7 +37,7 @@ const RelationshipFilter = (props: any) => (
 
 export const RelationshipList = (props: any) => {
   return (
-    <List {...props} filters={<RelationshipFilter />}>
+    <List {...props} filters={<RelationshipFilter/>} sort={{ field: 'modified', order: 'DESC' }}>
       <Datagrid rowClick="edit">
         <TextField source="id" />
         <TextField source="relationship_type" />

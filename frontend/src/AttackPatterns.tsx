@@ -15,7 +15,6 @@ import {
   Create,
   required
 } from "react-admin";
-import MyUrlField from "./MyUrlField";
 
 const KillChainName = [{ kill_chain_name: "mitre-attack" }];
 
@@ -28,7 +27,7 @@ const PhaseName = [
 
 export const AttackPatternList = (props: any) => {
   return (
-    <List {...props}>
+    <List {...props} sort={{ field: 'modified', order: 'DESC'}}>
       <Datagrid>
         <TextField source="name" />
         <TextField
