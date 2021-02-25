@@ -16,7 +16,7 @@ before_script:
   - docker-compose up -d --build
 
 script:
-  - docker-compose up
+  - docker-compose ps
 
 after_script:
   - docker-compose down
