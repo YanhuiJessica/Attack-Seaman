@@ -2,6 +2,8 @@ import React from "react";
 import {
   List,
   SelectInput,
+  SearchInput,
+  Filter,
   EditButton,
   Datagrid,
   UrlField,
@@ -25,9 +27,15 @@ const PhaseName = [
   { relationship_type: "revoked-by" },
 ];
 
+const AttackPatternFilter = (props: any) => (
+  <Filter {...props}>
+    <SearchInput label="Name Filter" source="name" alwaysOn />
+  </Filter>
+);
+
 export const AttackPatternList = (props: any) => {
   return (
-    <List {...props} sort={{ field: 'modified', order: 'DESC'}}>
+    <List {...props} filters={<AttackPatternFilter />} sort={{ field: 'modified', order: 'DESC'}}>
       <Datagrid>
         <TextField source="name" />
         <TextField
