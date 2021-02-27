@@ -23,7 +23,6 @@ const RelationShipTypes = [
 
 const RelationshipFilter = (props: any) => (
   <Filter {...props}>
-    {/* <TextInput label="Name" source="name" alwaysOn /> */}
     <SelectInput
       label="RelationshipType"
       choices={RelationShipTypes}
@@ -68,8 +67,8 @@ const RelationshipForm = (props: any) => {
   const disabled = !!props.record.id;
   return (
     <SimpleForm {...props}>
+      <TextInput source="type"  defaultValue='relationship' disabled  />
       <TextInput source="id" disabled={disabled} />
-      <TextInput source="type" />
 
       <ReferenceInput
         label="source_ref"

@@ -2,6 +2,9 @@ package database
 
 import (
 	"context"
+	"fmt"
+	"log"
+	"os/exec"
 	"strconv"
 	"time"
 
@@ -147,4 +150,14 @@ func (d *TenDatabase) UpdateAttackPattern(attackPattern *model.AttackPattern) *m
 		return attackPattern
 	}
 	return nil
+}
+
+// SaveAttackPatternByID saves.
+func (d *TenDatabase) SaveAttackPatternByID() {
+	_, err := exec.Command("/bin/sh", "./tools/update.sh").Output()
+	if err != nil {
+		fmt.Println(err)
+		log.Fatal(err)
+	}
+	fmt.Println("刷新 json 成功！")
 }

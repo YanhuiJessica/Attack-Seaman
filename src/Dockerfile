@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 RUN sed -i s/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g /etc/apk/repositories
-RUN apk add --no-cache go mongodb-tools
+RUN apk add --no-cache go mongodb-tools nodejs npm 
 
 ENV GOPROXY="https://goproxy.io"
 # Set the Current Working Directory inside the container
@@ -16,12 +16,11 @@ RUN go mod download
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
-RUN chmod +x /app/tools/update.sh
-# Build the Go app
+# Build the Node and Go app
+RUN npm install --unsafe-perm --prefix /app/nav-app/
 RUN go build -o main .
 
-# Expose port 8080 to the outside world
-EXPOSE 6868
+RUN chmod +x /app/tools/update.sh
+RUN chmod +x /app/docker-entrypoint.sh
 
-# Run the executable
-CMD ["./main"]
+CMD ["/bin/sh","./docker-entrypoint.sh"]

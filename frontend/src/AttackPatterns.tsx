@@ -21,25 +21,36 @@ import {
 const KillChainName = [{ kill_chain_name: "mitre-attack" }];
 
 const PhaseName = [
-  { relationship_type: "uses" },
-  { relationship_type: "mitigates" },
-  { relationship_type: "subtechnique-of" },
-  { relationship_type: "revoked-by" },
+  { phase_name: "reconnaissance" },
+  { phase_name: "resource-development" },
+  { phase_name: "initial-access" },
+  { phase_name: "execution" },
+  { phase_name: "persistence" },
+  { phase_name: "privilege-escalation" },
+  { phase_name: "defense-evasion" },
+  { phase_name: "credential-access" },
+  { phase_name: "discovery" },
+  { phase_name: "lateral-movement" },
+  { phase_name: "collection" },
+  { phase_name: "command-and-control" },
+  { phase_name: "exfiltration" },
+  { phase_name: "impact" }
 ];
 
 const AttackPatternFilter = (props: any) => (
   <Filter {...props}>
-    <SearchInput label="Name Filter" source="name" alwaysOn />
+    <SearchInput source="name" alwaysOn />
   </Filter>
-);
+);  
 
 export const AttackPatternList = (props: any) => {
   return (
+    
     <List {...props} filters={<AttackPatternFilter />} sort={{ field: 'modified', order: 'DESC'}}>
       <Datagrid>
         <TextField source="name" />
         <TextField
-          label="STIX_ID"
+          label="attackID"
           source="external_references[0].external_id"
         />
         <UrlField label="References" source="external_references[0].url" />
@@ -54,10 +65,10 @@ const AttackPatternForm = (props: any) => {
 
   return (
     <SimpleForm warnWhenUnsavedChanges {...props}>
-      <TextInput source="id" disabled={disabled} />
+      <TextInput source="type"  defaultValue='attack-pattern' disabled  />
+      <TextInput source="id" disabled={disabled} validate={required()} />
       <TextInput source="name" validate={required()} />
       <TextInput source="description" />
-      <TextInput source="type"  validate={required()} />
 
       <ArrayInput source="kill_chain_phases"  validate={required()} >
         <SimpleFormIterator>
@@ -68,7 +79,11 @@ const AttackPatternForm = (props: any) => {
             optionText="kill_chain_name"
             optionValue="kill_chain_name"
           />
-          <TextInput source="phase_name" label="phase_name" />
+          <SelectInput     source="phase_name"
+            label="phase_name"
+            choices={PhaseName}
+            optionText="phase_name"
+            optionValue="phase_name" />
         </SimpleFormIterator>
       </ArrayInput>
 
@@ -91,7 +106,7 @@ const AttackPatternForm = (props: any) => {
         title="x_mitre_detection"
       />
 
-      <ArrayInput label="x_mitre_platforms" source="x_mitre_platforms"  validate={required()} >
+      <ArrayInput label="x_mitre_platforms" source="x_mitre_platforms" validate={required()}>
         <SimpleFormIterator>
           <TextInput label="x_mitre_platform"/>
         </SimpleFormIterator>
