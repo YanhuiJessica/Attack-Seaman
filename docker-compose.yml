@@ -50,7 +50,8 @@ services:
       context: ./src # Use an image built from the specified dockerfile in the current directory.
       dockerfile: Dockerfile
     ports:
-      - 6868:6868 # Forward the exposed port 8080 on the container to port 8080 on the host machine
+      - 6868:6868 
+      - 4200:4200
     restart: unless-stopped
     networks:
       - web # Networks to join (Services on the same network can communicate with each other using their name)

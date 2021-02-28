@@ -39,6 +39,7 @@ func Create(db *database.TenDatabase, vInfo *model.VersionInfo, conf *config.Con
 	postAP := g.Group("/attackPatterns")
 	{
 		postAP.GET("", attackPatternAPIHandler.GetAttackPatterns)
+		postAP.POST("/save", attackPatternAPIHandler.SaveAttackPatternByID)
 		postAP.POST("", attackPatternAPIHandler.CreateAttackPattern)
 		postAP.GET(":id", attackPatternAPIHandler.GetAttackPatternByID)
 		postAP.PUT(":id", attackPatternAPIHandler.UpdateAttackPatternByID)

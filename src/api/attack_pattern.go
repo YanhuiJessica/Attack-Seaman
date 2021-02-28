@@ -2,10 +2,7 @@ package api
 
 import (
 	"errors"
-	"fmt"
-	"log"
 	"net/http"
-	"os/exec"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +15,7 @@ type AttackPatternDatabase interface {
 	GetAttackPatternByIDs(ids []string) []*model.AttackPattern
 	GetAttackPatternByID(id string) *model.AttackPattern
 	DeleteAttackPatternByID(id string) error
+	SaveAttackPatternByID()
 	CreateAttackPattern(attackPattern *model.AttackPattern) *model.AttackPattern
 	GetAttackPatterns(paging *model.Paging) []*model.AttackPattern
 	UpdateAttackPattern(attackPattern *model.AttackPattern) *model.AttackPattern
@@ -132,12 +130,6 @@ func (a *AttackPatternAPI) GetAttackPatternByID(ctx *gin.Context) {
 
 // UpdateAttackPatternByID returns the attackPattern by id
 func (a *AttackPatternAPI) UpdateAttackPatternByID(ctx *gin.Context) {
-	_, err := exec.Command("/bin/sh", "/app/tools/update.sh").Output()
-	if err != nil {
-		fmt.Println(err)
-		log.Fatal(err)
-	}
-	fmt.Println("成功啦！")
 	withID(ctx, "id", func(id string) {
 		var attackPattern = model.AttackPattern{}
 		abort := errors.New("attackPattern does not exist")
@@ -151,4 +143,9 @@ func (a *AttackPatternAPI) UpdateAttackPatternByID(ctx *gin.Context) {
 			ctx.AbortWithError(404, abort)
 		}
 	})
+}
+
+// SaveAttackPatternByID returns the attackPattern by id
+func (a *AttackPatternAPI) SaveAttackPatternByID(ctx *gin.Context) {
+	a.DB.SaveAttackPatternByID()
 }
