@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
+    "start": "ng serve --host 0.0.0.0 --port 4200 --public-host attack-seaman.com",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

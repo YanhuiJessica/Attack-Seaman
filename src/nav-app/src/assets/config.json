@@ -5,7 +5,7 @@
             "domains": [
                 {   
                     "name": "Enterprise", 
-                    "data": ["http://127.0.0.1:4200/assets/new.json"]
+                    "data": ["http://attack-seaman.com:4200/assets/new.json"]
                 },
                 {   
                     "name": "Mobile", 
