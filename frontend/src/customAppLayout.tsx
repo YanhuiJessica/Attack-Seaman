@@ -30,6 +30,11 @@ const CustomAppBar = (props:any) => {
 
   const submitHandler = (e:any) => {
     e.preventDefault()
+    setState({
+      open: true,
+      Transition: Fade,
+      msg: "刷新中......"
+    });
     fetch('http://attack-seaman.com:6868/attackPatterns/save',{
       method: 'POST',
     }).then(response => {

@@ -12,6 +12,7 @@ import {
   SimpleForm,
   TextInput,
   Create,
+  required,
 } from "react-admin";
 
 const RelationShipTypes = [
@@ -68,7 +69,7 @@ const RelationshipForm = (props: any) => {
   return (
     <SimpleForm {...props}>
       <TextInput source="type"  defaultValue='relationship' disabled  />
-      <TextInput source="id" disabled={disabled} />
+      <TextInput source="id" disabled={disabled} validate={required()} />
 
       <ReferenceInput
         label="source_ref"
