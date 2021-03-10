@@ -87,6 +87,7 @@ const CustomAppBar = (props:any) => {
         onClose={handleClose}
         TransitionComponent={state.Transition}
         message={state.msg}
+        autoHideDuration={6000}
       />
     </AppBar >
   );
