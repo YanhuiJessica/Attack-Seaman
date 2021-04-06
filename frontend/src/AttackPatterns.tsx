@@ -65,10 +65,10 @@ const AttackPatternForm = (props: any) => {
 
   return (
     <SimpleForm warnWhenUnsavedChanges {...props}>
-      <TextInput source="type"  defaultValue='attack-pattern' disabled  />
-      <TextInput source="id" disabled={disabled} validate={required()} />
-      <TextInput source="name" validate={required()} />
-      <TextInput source="description" />
+      <TextInput source="type" fullWidth defaultValue='attack-pattern' disabled  />
+      <TextInput source="id" fullWidth disabled={disabled} validate={required()} />
+      <TextInput source="name" fullWidth validate={required()} />
+      <TextInput source="description" fullWidth />
 
       <ArrayInput source="kill_chain_phases"  validate={required()} >
         <SimpleFormIterator>
@@ -76,12 +76,14 @@ const AttackPatternForm = (props: any) => {
             source="kill_chain_name"
             label="kill_chain_name"
             choices={KillChainName}
+            fullWidth
             optionText="kill_chain_name"
             optionValue="kill_chain_name"
           />
           <SelectInput     source="phase_name"
             label="phase_name"
             choices={PhaseName}
+            fullWidth
             optionText="phase_name"
             optionValue="phase_name" />
         </SimpleFormIterator>
@@ -89,9 +91,9 @@ const AttackPatternForm = (props: any) => {
 
       <ArrayInput source="external_references" validate={required()} >
         <SimpleFormIterator>
-          <TextInput source="source_name" label="source_name" />
-          <TextInput source="external_id" label="external_id" />
-          <TextInput source="url" label="url" />
+          <TextInput source="source_name" fullWidth label="source_name" />
+          <TextInput source="external_id" fullWidth label="external_id" />
+          <TextInput source="url" fullWidth label="url" />
         </SimpleFormIterator>
       </ArrayInput>
 
@@ -99,16 +101,18 @@ const AttackPatternForm = (props: any) => {
         source="x_mitre_version"
         label="x_mitre_version"
         title="x_mitre_version"
+        fullWidth
       />
       <TextInput
         source="x_mitre_detection"
         label="x_mitre_detection"
         title="x_mitre_detection"
+        fullWidth
       />
 
       <ArrayInput label="x_mitre_platforms" source="x_mitre_platforms" validate={required()}>
         <SimpleFormIterator>
-          <TextInput label="x_mitre_platform"/>
+          <TextInput fullWidth label="x_mitre_platform"/>
         </SimpleFormIterator>
       </ArrayInput>
 
@@ -117,13 +121,13 @@ const AttackPatternForm = (props: any) => {
         source="x_mitre_permissions_required"
       >
         <SimpleFormIterator>
-          <TextInput />
+          <TextInput fullWidth/>
         </SimpleFormIterator>
       </ArrayInput>
 
       <ArrayInput label="x_mitre_data_sources" source="x_mitre_data_sources">
         <SimpleFormIterator>
-          <TextInput />
+          <TextInput fullWidth/>
         </SimpleFormIterator>
       </ArrayInput>
 
@@ -131,6 +135,7 @@ const AttackPatternForm = (props: any) => {
         source="x_mitre_is_subtechnique"
         label="x_mitre_is_subtechnique"
         defaultValue={false}
+        fullWidth
       />
     </SimpleForm>
   );

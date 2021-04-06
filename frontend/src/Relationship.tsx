@@ -39,15 +39,15 @@ export const RelationshipList = (props: any) => {
   return (
     <List {...props} filters={<RelationshipFilter/>} sort={{ field: 'modified', order: 'DESC' }}>
       <Datagrid rowClick="edit">
-        <TextField source="id" />
-        <TextField source="relationship_type" />
+        <TextField source="id"/>
+        <TextField source="relationship_type"/>
 
         <ReferenceField
           label="source_ref"
           source="source_ref"
           reference="attackPatterns"
         >
-          <TextField source="name" />
+          <TextField source="name"/>
         </ReferenceField>
 
         <ReferenceField
@@ -55,7 +55,7 @@ export const RelationshipList = (props: any) => {
           source="target_ref"
           reference="attackPatterns"
         >
-          <TextField source="name" />
+          <TextField source="name"/>
         </ReferenceField>
       </Datagrid>
     </List>
@@ -68,19 +68,21 @@ const RelationshipForm = (props: any) => {
   const disabled = !!props.record.id;
   return (
     <SimpleForm {...props}>
-      <TextInput source="type"  defaultValue='relationship' disabled  />
-      <TextInput source="id" disabled={disabled} validate={required()} />
+      <TextInput source="type"  defaultValue='relationship' disabled  fullWidth/>
+      <TextInput source="id" disabled={disabled} validate={required()} fullWidth/>
 
       <ReferenceInput
         label="source_ref"
         source="source_ref"
         reference="attackPatterns"
         filterToQuery={(searchText: any) => ({ name: searchText })}
+        fullWidth
       >
         <AutocompleteInput
           source="name"
           optionText={optionRenderer}
           resettable
+          fullWidth
         />
       </ReferenceInput>
 
@@ -89,18 +91,21 @@ const RelationshipForm = (props: any) => {
         source="target_ref"
         reference="attackPatterns"
         filterToQuery={(searchText: any) => ({ name: searchText })}
+        fullWidth
       >
         <AutocompleteInput
           source="name"
           optionText={optionRenderer}
           resettable
+          fullWidth
         />
       </ReferenceInput>
 
       <SelectInput source="relationship_type" label="relationship_type"   choices={RelationShipTypes}
       optionText="relationship_type"
       optionValue="relationship_type"
-      defaultValue="subtechnique-of" />
+      defaultValue="subtechnique-of" 
+      fullWidth />
     </SimpleForm>
   );
 };
