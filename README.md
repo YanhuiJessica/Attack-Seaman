@@ -2,7 +2,21 @@
 
 Golang + Mongodb + react-admin
 
+## 编辑 Hosts
+
+操作系统 | Hosts 文件位置
+-|-
+Linux|`/etc/hosts`
+Windows|`C:\Windows\System32\drivers\etc\hosts`
+Mac|`/private/etc/hosts`
+
+添加一行
+```bash
+127.0.0.1 attack-seaman.com
+```
+
 ## Docker
+
 ```sh
 #通过 docker 启动项目 
 docker-compose up -d
@@ -10,10 +24,11 @@ docker-compose up -d
 # 查看特定 container （如：api）日志
 docker-compose logs api
 
-# 访问本地 127.0.0.1:3000 如数据、操作等均无误则说明启动成功
+# 访问本地 attack-seaman.com:3000 如数据、操作等均无误则说明启动成功
 ```
 
 ## Dev
+
 ```sh
 # /src/config.yml 配置好 mongodb connection
 # api /src
@@ -31,6 +46,7 @@ yarn & yarn start
 > db.mitre_attack.find().forEach(function(doc){doc.created = new Date(doc.created);db.mitre_attack.save(doc)});
 > db.mitre_attack.find().forEach(function(doc){doc.modified = new Date(doc.modified);db.mitre_attack.save(doc)});
 ```
+
 ### Mitre ATT&CK 编辑
 
 ![](./attackPatterns.png)
