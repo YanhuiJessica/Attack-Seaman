@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/zGina/Attack-Seaman/src/config"
 	"github.com/zGina/Attack-Seaman/src/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -13,12 +14,13 @@ import (
 // GetRelationships returns all relationships.
 // start, end int, order, sort string
 func (d *TenDatabase) GetRelationships(paging *model.Paging) []*model.Relationship {
+	conf := config.Get()
 	relationships := []*model.Relationship{}
 	condition := bson.M{}
 	if paging.Condition != nil {
 		condition = (paging.Condition).(bson.M)
 	}
-	cursor, err := d.DB.Collection("mitre_attack").
+	cursor, err := d.DB.Collection(conf.Database.Tbname).
 		Find(context.Background(), condition,
 			&options.FindOptions{
 				Skip:  paging.Skip,
@@ -43,9 +45,10 @@ func (d *TenDatabase) GetRelationships(paging *model.Paging) []*model.Relationsh
 
 // CreateRelationship creates a relationship.
 func (d *TenDatabase) CreateRelationship(relationship *model.Relationship) *model.Relationship {
+	conf := config.Get()
 	relationship.Created = time.Now()
 	relationship.Modified = time.Now()
-	_, result := d.DB.Collection("mitre_attack").
+	_, result := d.DB.Collection(conf.Database.Tbname).
 		InsertOne(context.Background(), relationship)
 	if result != nil {
 		return relationship
@@ -55,8 +58,9 @@ func (d *TenDatabase) CreateRelationship(relationship *model.Relationship) *mode
 
 // GetRelationshipByName returns the relationship by the given name or nil.
 func (d *TenDatabase) GetRelationshipByName(name string) *model.Relationship {
+	conf := config.Get()
 	var relationship *model.Relationship
-	err := d.DB.Collection("mitre_attack").
+	err := d.DB.Collection(conf.Database.Tbname).
 		FindOne(context.Background(), bson.D{{Key: "name", Value: name}}).
 		Decode(&relationship)
 	if err != nil {
@@ -67,8 +71,9 @@ func (d *TenDatabase) GetRelationshipByName(name string) *model.Relationship {
 
 // GetRelationshipByStixID returns the user by the given name or nil.
 func (d *TenDatabase) GetRelationshipByStixID(id string) *model.Relationship {
+	conf := config.Get()
 	var relationship *model.Relationship
-	err := d.DB.Collection("mitre_attack").
+	err := d.DB.Collection(conf.Database.Tbname).
 		FindOne(context.Background(), bson.M{"id": id}).
 		Decode(&relationship)
 	if err != nil {
@@ -79,8 +84,9 @@ func (d *TenDatabase) GetRelationshipByStixID(id string) *model.Relationship {
 
 // GetRelationshipByIDs returns the relationship by the given id or nil.
 func (d *TenDatabase) GetRelationshipByIDs(ids []string) []*model.Relationship {
+	conf := config.Get()
 	var relationships []*model.Relationship
-	cursor, err := d.DB.Collection("mitre_attack").
+	cursor, err := d.DB.Collection(conf.Database.Tbname).
 		Find(context.Background(), bson.D{{
 			Key: "id",
 			Value: bson.D{{
@@ -106,7 +112,8 @@ func (d *TenDatabase) GetRelationshipByIDs(ids []string) []*model.Relationship {
 
 // CountRelationship returns the relationship count
 func (d *TenDatabase) CountRelationship(condition interface{}) string {
-	total, err := d.DB.Collection("mitre_attack").CountDocuments(context.Background(), condition, &options.CountOptions{})
+	conf := config.Get()
+	total, err := d.DB.Collection(conf.Database.Tbname).CountDocuments(context.Background(), condition, &options.CountOptions{})
 	if err != nil {
 		return "0"
 	}
@@ -116,20 +123,22 @@ func (d *TenDatabase) CountRelationship(condition interface{}) string {
 // DeleteRelationshipByID deletes a relationship by its id.
 // func (d *TenDatabase) DeleteRelationshipByID(id string) error {
 // 	if d.CountRelationship(bson.D{{Key: "id", Value: id}}) == "0" {
-// 		_, err := d.DB.Collection("mitre_attack").DeleteOne(context.Background(), bson.M{"id": id})
+// 		_, err := d.DB.Collection(conf.Database.Tbname).DeleteOne(context.Background(), bson.M{"id": id})
 // 		return err
 // 	}
 // 	return errors.New("the current relationship has no posts published")
 // }
 func (d *TenDatabase) DeleteRelationshipByID(id string) error {
-	_, err := d.DB.Collection("mitre_attack").DeleteOne(context.Background(), bson.M{"id": id})
+	conf := config.Get()
+	_, err := d.DB.Collection(conf.Database.Tbname).DeleteOne(context.Background(), bson.M{"id": id})
 	return err
 }
 
 // GetRelationshipByID get a relationship by its id.
 func (d *TenDatabase) GetRelationshipByID(id string) *model.Relationship {
+	conf := config.Get()
 	var relationship *model.Relationship
-	err := d.DB.Collection("mitre_attack").
+	err := d.DB.Collection(conf.Database.Tbname).
 		FindOne(context.Background(), bson.M{"id": id}).
 		Decode(&relationship)
 	if err != nil {
@@ -140,8 +149,9 @@ func (d *TenDatabase) GetRelationshipByID(id string) *model.Relationship {
 
 // UpdateRelationship updates a relationship.
 func (d *TenDatabase) UpdateRelationship(relationship *model.Relationship) *model.Relationship {
+	conf := config.Get()
 	relationship.Modified = time.Now()
-	result := d.DB.Collection("mitre_attack").
+	result := d.DB.Collection(conf.Database.Tbname).
 		FindOneAndReplace(context.Background(),
 			bson.D{{Key: "id", Value: relationship.STIX_ID}},
 			relationship,

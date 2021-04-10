@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar,Layout } from 'react-admin';
+import { AppBar, Layout, FormTab, FileInput } from 'react-admin';
 import { Typography,Button,Fade,Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -27,6 +27,29 @@ const CustomAppBar = (props:any) => {
     Transition: Fade,
     msg: '',
   });
+
+  const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const files = e.target.files;
+    console.log("files:", files);
+
+    const formData = new FormData();
+
+    if (files) {
+      formData.append("File", files[0]);
+
+      fetch("http://attack-seaman.com:6868/upload?", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Success:", result);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  };
 
   const submitHandler = (e:any) => {
     e.preventDefault()
@@ -63,25 +86,30 @@ const CustomAppBar = (props:any) => {
   };
 
   return (
-    <AppBar {...props} color='secondary' >
-      <Typography
-        variant="h6"
-        color="inherit"
-        className={classes.title}
-      >Mitre Attack 编辑</Typography>
+    <AppBar {...props} color="secondary">
+      <Typography variant="h6" color="inherit" className={classes.title}>
+        Mitre Attack 编辑
+      </Typography>
       <Typography
         variant="h6"
         color="inherit"
         className={classes.title}
         id="react-admin-title"
       />
-      <Button style= {
-        {
-          color: '#FFFFFF',
+      <Button variant="contained" component="label">
+        Upload File
+        <input type="file" id="fileinput" accept='.json' hidden onChange={handleFileSelected}/>
+      </Button>
+      <Button
+        style={{
+          color: "#FFFFFF",
           fontWeight: 500,
           fontSize: 14,
         }}
-      onClick={submitHandler}>刷新layer</Button>
+        onClick={submitHandler}
+      >
+        刷新layer
+      </Button>
       <Snackbar
         open={state.open}
         onClose={handleClose}
@@ -89,7 +117,7 @@ const CustomAppBar = (props:any) => {
         message={state.msg}
         autoHideDuration={6000}
       />
-    </AppBar >
+    </AppBar>
   );
 };
 

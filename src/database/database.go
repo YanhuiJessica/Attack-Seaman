@@ -4,10 +4,13 @@ import (
 	"context"
 	"time"
 
+	"github.com/zGina/Attack-Seaman/src/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
+
+var conf = config.Get()
 
 // New creates a new wrapper for the mongo-go-driver.
 func New(connection, dbname string) (*TenDatabase, error) {

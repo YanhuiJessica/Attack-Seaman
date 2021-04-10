@@ -12,4 +12,5 @@ require (
 	github.com/ugorji/go v1.2.4 // indirect
 	go.mongodb.org/mongo-driver v1.4.6
 	gopkg.in/go-playground/validator.v8 v8.18.2
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

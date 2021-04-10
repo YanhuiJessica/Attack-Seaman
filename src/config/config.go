@@ -1,7 +1,10 @@
 package config
 
 import (
+	"io/ioutil"
+
 	"github.com/gotify/configor"
+	"gopkg.in/yaml.v2"
 )
 
 // Configuration is stuff that can be configured externally per env variables or config file (config.yml).
@@ -14,6 +17,7 @@ type Configuration struct {
 	Database struct {
 		Dbname     string `default:""`
 		Connection string `default:""`
+		Tbname     string `default:""`
 	}
 }
 
@@ -25,4 +29,16 @@ func Get() *Configuration {
 		panic(err)
 	}
 	return conf
+}
+
+func Save(config *Configuration) error {
+	var js []byte
+	var err error
+	js, err = yaml.Marshal(&config)
+	if err != nil {
+		return nil
+	}
+
+	err = ioutil.WriteFile("config.yml", js, 0600)
+	return err
 }

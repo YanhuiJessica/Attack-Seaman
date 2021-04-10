@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/zGina/Attack-Seaman/src/config"
 	"github.com/zGina/Attack-Seaman/src/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,12 +17,13 @@ import (
 // GetAttackPatterns returns all attackPatterns.
 // start, end int, order, sort string
 func (d *TenDatabase) GetAttackPatterns(paging *model.Paging) []*model.AttackPattern {
+	conf := config.Get()
 	attackPatterns := []*model.AttackPattern{}
 	condition := bson.M{}
 	if paging.Condition != nil {
 		condition = (paging.Condition).(bson.M)
 	}
-	cursor, err := d.DB.Collection("mitre_attack").
+	cursor, err := d.DB.Collection(conf.Database.Tbname).
 		Find(context.Background(), condition,
 			&options.FindOptions{
 				Skip:  paging.Skip,
@@ -48,7 +50,7 @@ func (d *TenDatabase) GetAttackPatterns(paging *model.Paging) []*model.AttackPat
 func (d *TenDatabase) CreateAttackPattern(attackPattern *model.AttackPattern) *model.AttackPattern {
 	attackPattern.Created = time.Now()
 	attackPattern.Modified = time.Now()
-	_, result := d.DB.Collection("mitre_attack").
+	_, result := d.DB.Collection(conf.Database.Tbname).
 		InsertOne(context.Background(), attackPattern)
 	if result != nil {
 		return attackPattern
@@ -58,8 +60,9 @@ func (d *TenDatabase) CreateAttackPattern(attackPattern *model.AttackPattern) *m
 
 // GetAttackPatternByName returns the attackPattern by the given name or nil.
 func (d *TenDatabase) GetAttackPatternByName(name string) *model.AttackPattern {
+	conf := config.Get()
 	var attackPattern *model.AttackPattern
-	err := d.DB.Collection("mitre_attack").
+	err := d.DB.Collection(conf.Database.Tbname).
 		FindOne(context.Background(), bson.D{{Key: "name", Value: name}}).
 		Decode(&attackPattern)
 	if err != nil {
@@ -70,8 +73,9 @@ func (d *TenDatabase) GetAttackPatternByName(name string) *model.AttackPattern {
 
 // GetAttackPatternByStixID returns the user by the given name or nil.
 func (d *TenDatabase) GetAttackPatternByStixID(id string) *model.AttackPattern {
+	conf := config.Get()
 	var attackPattern *model.AttackPattern
-	err := d.DB.Collection("mitre_attack").
+	err := d.DB.Collection(conf.Database.Tbname).
 		FindOne(context.Background(), bson.M{"id": id}).
 		Decode(&attackPattern)
 	if err != nil {
@@ -82,8 +86,9 @@ func (d *TenDatabase) GetAttackPatternByStixID(id string) *model.AttackPattern {
 
 // GetAttackPatternByIDs returns the attackPattern by the given id or nil.
 func (d *TenDatabase) GetAttackPatternByIDs(ids []string) []*model.AttackPattern {
+	conf := config.Get()
 	var attackPatterns []*model.AttackPattern
-	cursor, err := d.DB.Collection("mitre_attack").
+	cursor, err := d.DB.Collection(conf.Database.Tbname).
 		Find(context.Background(), bson.D{{
 			Key: "id",
 			Value: bson.D{{
@@ -109,7 +114,8 @@ func (d *TenDatabase) GetAttackPatternByIDs(ids []string) []*model.AttackPattern
 
 // CountAttackPattern returns the attackPattern count
 func (d *TenDatabase) CountAttackPattern(condition interface{}) string {
-	total, err := d.DB.Collection("mitre_attack").CountDocuments(context.Background(), condition, &options.CountOptions{})
+	conf := config.Get()
+	total, err := d.DB.Collection(conf.Database.Tbname).CountDocuments(context.Background(), condition, &options.CountOptions{})
 	if err != nil {
 		return "0"
 	}
@@ -118,15 +124,16 @@ func (d *TenDatabase) CountAttackPattern(condition interface{}) string {
 
 // DeleteAttackPatternByID deletes a attackPattern by its id.
 func (d *TenDatabase) DeleteAttackPatternByID(id string) error {
-	_, err := d.DB.Collection("mitre_attack").DeleteOne(context.Background(), bson.M{"id": id})
+	conf := config.Get()
+	_, err := d.DB.Collection(conf.Database.Tbname).DeleteOne(context.Background(), bson.M{"id": id})
 	return err
 }
 
 // GetAttackPatternByID get a attackPattern by its id.
 func (d *TenDatabase) GetAttackPatternByID(id string) *model.AttackPattern {
+	conf := config.Get()
 	var attackPattern *model.AttackPattern
-	print(id)
-	err := d.DB.Collection("mitre_attack").
+	err := d.DB.Collection(conf.Database.Tbname).
 		FindOne(context.Background(), bson.M{"id": id}).
 		Decode(&attackPattern)
 	print(attackPattern)
@@ -138,9 +145,9 @@ func (d *TenDatabase) GetAttackPatternByID(id string) *model.AttackPattern {
 
 // UpdateAttackPattern updates a attackPattern.
 func (d *TenDatabase) UpdateAttackPattern(attackPattern *model.AttackPattern) *model.AttackPattern {
-
+	conf := config.Get()
 	attackPattern.Modified = time.Now()
-	result := d.DB.Collection("mitre_attack").
+	result := d.DB.Collection(conf.Database.Tbname).
 		FindOneAndReplace(context.Background(),
 			bson.D{{Key: "id", Value: attackPattern.STIX_ID}},
 			attackPattern,
@@ -154,7 +161,11 @@ func (d *TenDatabase) UpdateAttackPattern(attackPattern *model.AttackPattern) *m
 
 // SaveAttackPatternByID saves.
 func (d *TenDatabase) SaveAttackPatternByID() {
-	_, err := exec.Command("/bin/sh", "./tools/update.sh").Output()
+	conf = config.Get()
+	args := []string{"./tools/update.sh", conf.Database.Tbname}
+
+	fmt.Print(args)
+	_, err := exec.Command("/bin/sh", args...).Output()
 	if err != nil {
 		fmt.Println(err)
 		log.Fatal(err)
