@@ -9,5 +9,7 @@ server:
     Access-Control-Expose-Headers: X-Total-Count
 database:
   dbname: attackSeaman
-  connection: mongodb://attackSeaman:cuccs1sgreat@127.0.0.1:27017
+  connection: mongodb://attackSeaman:cuccs1sgreat@mongodb:27017
   tbname: enterprise
+utils:
+  filepath: /app/assets/

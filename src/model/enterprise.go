@@ -17,7 +17,7 @@ type Base struct {
 	ID primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
 	// ObjectMarkingRefs  []string            `json:"object_marking_refs"`
 	// CreatedByRef       string              `bson:"created_by_ref"`
-	STIX_ID  string    `bson:"id" json:"id"`
+	STIX_ID  string    `bson:"id,omitempty" json:"id,omitempty"`
 	Type     string    `bson:"type" json:"type"`
 	Created  time.Time `bson:"created" json:"created"`
 	Modified time.Time `bson:"modified" json:"modified"`

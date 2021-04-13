@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	uuid "github.com/satori/go.uuid"
 	"github.com/zGina/Attack-Seaman/src/model"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -103,7 +104,17 @@ func (a *RelationshipAPI) GetRelationships(ctx *gin.Context) {
 // CreateRelationship creates a relationship.
 func (a *RelationshipAPI) CreateRelationship(ctx *gin.Context) {
 	var relationship = model.Relationship{}
+
 	if err := ctx.ShouldBind(&relationship); err == nil {
+		if relationship.STIX_ID != "" {
+			if res := a.DB.GetRelationshipByID(relationship.STIX_ID); res != nil {
+				ctx.AbortWithError(403, errors.New("Repeated relationship ID"))
+				return
+			}
+		} else {
+			myuuid := uuid.NewV4()
+			relationship.STIX_ID = "relationship--" + myuuid.String()
+		}
 		if result := a.DB.CreateRelationship(relationship.New()); result != nil {
 			ctx.JSON(201, result)
 		} else {

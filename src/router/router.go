@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os/exec"
 	"strings"
-
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/zGina/Attack-Seaman/src/api"
 	"github.com/zGina/Attack-Seaman/src/config"
@@ -14,8 +14,6 @@ import (
 	"github.com/zGina/Attack-Seaman/src/error"
 	"github.com/zGina/Attack-Seaman/src/model"
 )
-
-const FILE_UPLOAD_PATH = "/home/anig/study/Attack-Seaman/database/"
 
 // Create creates the gin engine with all routes.
 func Create(db *database.TenDatabase, vInfo *model.VersionInfo, conf *config.Configuration) *gin.Engine {
@@ -62,12 +60,15 @@ func Create(db *database.TenDatabase, vInfo *model.VersionInfo, conf *config.Con
 	}
 
 	g.POST("/upload", func(c *gin.Context) {
+
 		file, err := c.FormFile("File")
 		if err != nil {
-			log.Fatal(err)
+			c.AbortWithError(403, errors.New("Bad file post"))
+			return
 		}
 		log.Println(file.Filename)
-
+		FILE_UPLOAD_PATH := conf.Utils.Filepath
+		
 		err = c.SaveUploadedFile(file, FILE_UPLOAD_PATH+file.Filename)
 		if err != nil {
 			log.Fatal(err)
@@ -78,7 +79,7 @@ func Create(db *database.TenDatabase, vInfo *model.VersionInfo, conf *config.Con
 		basename := ".json"
 		name := strings.TrimSuffix(file.Filename, basename)
 
-		args := []string{"./tools/import.sh", name, filepath}
+		args := []string{"/app/tools/import.sh", name, filepath}
 		fmt.Println(args)
 
 		_, err = exec.Command("/bin/sh", args...).Output()

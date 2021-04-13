@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	uuid "github.com/satori/go.uuid"
 	"github.com/zGina/Attack-Seaman/src/model"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -106,7 +107,17 @@ func (a *AttackPatternAPI) GetAttackPatterns(ctx *gin.Context) {
 // CreateAttackPattern creates a attackPattern.
 func (a *AttackPatternAPI) CreateAttackPattern(ctx *gin.Context) {
 	var attackPattern = model.AttackPattern{}
+
 	if err := ctx.ShouldBind(&attackPattern); err == nil {
+		if attackPattern.STIX_ID != "" {
+			if res := a.DB.GetAttackPatternByID(attackPattern.STIX_ID); res != nil {
+				ctx.AbortWithError(403, errors.New("Repeated attackPattern ID"))
+				return
+			}
+		} else {
+			myuuid := uuid.NewV4()
+			attackPattern.STIX_ID = "attack-pattern--" + myuuid.String()
+		}
 		if result := a.DB.CreateAttackPattern(attackPattern.New()); result != nil {
 			ctx.JSON(201, result)
 		} else {

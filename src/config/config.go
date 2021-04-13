@@ -19,6 +19,9 @@ type Configuration struct {
 		Connection string `default:""`
 		Tbname     string `default:""`
 	}
+	Utils struct {
+		Filepath   string `default:""`
+	}
 }
 
 // Get returns the configuration extracted from env variables or config file.

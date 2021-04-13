@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppBar, Layout, FormTab, FileInput } from 'react-admin';
-import { Typography,Button,Fade,Snackbar } from '@material-ui/core';
+import { AppBar, Layout } from 'react-admin';
+import { Typography, Button, Fade, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -43,9 +43,11 @@ const CustomAppBar = (props:any) => {
       })
         .then((response) => response.json())
         .then((result) => {
+          window.location.reload();
           console.log("Success:", result);
         })
         .catch((error) => {
+          window.location.reload();
           console.error("Error:", error);
         });
     }
