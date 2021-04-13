@@ -6,13 +6,13 @@ services:
         - mongo_seed
         - app
     build:
-      context: ./frontend
+      context: .
       dockerfile: Dockerfile
     tty: true
     ports:
       - 3000:3000
     volumes:
-      - ./frontend:/app
+      - .:/app
       - /app/node_modules
     networks:
       - web
@@ -30,7 +30,7 @@ services:
       MONGO_INITDB_DATABASE: attackSeaman
       MONGODB_DATA_DIR: /data/db
     volumes:
-      - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ../database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     networks:
       - web
 
@@ -42,7 +42,7 @@ services:
     networks:
       - web
     volumes:
-      - ./database:/database
+      - ../database:/database
     command:
       /bin/sh /database/import.sh
 
@@ -50,7 +50,7 @@ services:
     container_name: app
     # Configuration for building the docker image for the service
     build:
-      context: ./src # Use an image built from the specified dockerfile in the current directory.
+      context: ../src # Use an image built from the specified dockerfile in the current directory.
       dockerfile: Dockerfile
     ports:
       - 6868:6868 
