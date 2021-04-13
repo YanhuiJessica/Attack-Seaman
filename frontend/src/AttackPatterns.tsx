@@ -18,7 +18,12 @@ import {
   required
 } from "react-admin";
 
-const KillChainName = [{ kill_chain_name: "mitre-attack" }];
+const KillChainName = [
+  { kill_chain_name: "mitre-attack" },
+  { kill_chain_name: "mitre-ics-attack" },
+  { kill_chain_name: "mitre-pre-attack" },
+  { kill_chain_name: "mitre-mobile-attack" },
+];
 
 const PhaseName = [
   { phase_name: "reconnaissance" },
@@ -66,7 +71,7 @@ const AttackPatternForm = (props: any) => {
   return (
     <SimpleForm warnWhenUnsavedChanges {...props}>
       <TextInput source="type" fullWidth defaultValue='attack-pattern' disabled  />
-      <TextInput source="id" fullWidth disabled={disabled} validate={required()} />
+      <TextInput source="id" fullWidth disabled={disabled} />
       <TextInput source="name" fullWidth validate={required()} />
       <TextInput source="description" fullWidth />
 
@@ -80,7 +85,7 @@ const AttackPatternForm = (props: any) => {
             optionText="kill_chain_name"
             optionValue="kill_chain_name"
           />
-          <SelectInput     source="phase_name"
+          <SelectInput  source="phase_name"
             label="phase_name"
             choices={PhaseName}
             fullWidth

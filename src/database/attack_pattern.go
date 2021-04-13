@@ -48,6 +48,7 @@ func (d *TenDatabase) GetAttackPatterns(paging *model.Paging) []*model.AttackPat
 
 // CreateAttackPattern creates a attackPattern.
 func (d *TenDatabase) CreateAttackPattern(attackPattern *model.AttackPattern) *model.AttackPattern {
+	conf := config.Get()
 	attackPattern.Created = time.Now()
 	attackPattern.Modified = time.Now()
 	_, result := d.DB.Collection(conf.Database.Tbname).

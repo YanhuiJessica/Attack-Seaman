@@ -9,6 +9,7 @@ require (
 	github.com/gotify/configor v1.0.2
 	github.com/gotify/server v1.2.1
 	github.com/mattn/go-isatty v0.0.12 // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/ugorji/go v1.2.4 // indirect
 	go.mongodb.org/mongo-driver v1.4.6
 	gopkg.in/go-playground/validator.v8 v8.18.2

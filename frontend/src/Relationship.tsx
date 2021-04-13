@@ -69,13 +69,14 @@ const RelationshipForm = (props: any) => {
   return (
     <SimpleForm {...props}>
       <TextInput source="type"  defaultValue='relationship' disabled  fullWidth/>
-      <TextInput source="id" disabled={disabled} validate={required()} fullWidth/>
+      <TextInput source="id" disabled={disabled} fullWidth/>
 
       <ReferenceInput
         label="source_ref"
         source="source_ref"
         reference="attackPatterns"
         filterToQuery={(searchText: any) => ({ name: searchText })}
+        validate={required()}
         fullWidth
       >
         <AutocompleteInput
@@ -91,6 +92,7 @@ const RelationshipForm = (props: any) => {
         source="target_ref"
         reference="attackPatterns"
         filterToQuery={(searchText: any) => ({ name: searchText })}
+        validate={required()}
         fullWidth
       >
         <AutocompleteInput

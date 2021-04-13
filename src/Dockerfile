@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 RUN sed -i s/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g /etc/apk/repositories
-RUN apk add --no-cache go mongodb-tools nodejs npm 
+RUN apk add --no-cache go mongodb-tools nodejs yarn 
 
 ENV GOPROXY="https://goproxy.io"
 # Set the Current Working Directory inside the container
@@ -17,7 +17,7 @@ RUN go mod download
 COPY . .
 
 # Build the Node and Go app
-RUN npm install --unsafe-perm --prefix /app/nav-app/
+RUN yarn --cwd /app/nav-app/
 RUN go build -o main .
 
 RUN chmod +x /app/tools/update.sh

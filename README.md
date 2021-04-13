@@ -41,12 +41,6 @@ cd ../frontend
 yarn & yarn start
 ```
 
-```sh
-# 将 mongodb 中string字段转化为 Date，方便排序
-> db.mitre_attack.find().forEach(function(doc){doc.created = new Date(doc.created);db.mitre_attack.save(doc)});
-> db.mitre_attack.find().forEach(function(doc){doc.modified = new Date(doc.modified);db.mitre_attack.save(doc)});
-```
-
 ### Mitre ATT&CK 编辑
 
 ![](./attackPatterns.png)
@@ -75,7 +69,6 @@ Attack-Navigator 修改 domain 加载的路径为刚刚得到的`new.json`：
 ![](navigator.png)
 
 
-
 # Refs
 - [Ten-Minutes-App](https://github.com/Kirk-Wang/Ten-Minutes-App)
 * [mongo-go-dirver offical examples](https://github.com/mongodb/mongo-go-driver/blob/master/examples/documentation_examples/examples.go)
@@ -87,6 +80,3 @@ Attack-Navigator 修改 domain 加载的路径为刚刚得到的`new.json`：
 * [Composite literal uses unkeyed fields](https://stackoverflow.com/questions/54548441/composite-literal-uses-unkeyed-fields)
 * [Convert between int, int64 and string](https://yourbasic.org/golang/convert-int-to-string/)
 * [go test -run does not work for a particular test](https://github.com/stretchr/testify/issues/460)
-```sh
-go test -v -run TestDatabaseSuite ./database -testify.m TestGetUsers
-```
