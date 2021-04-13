@@ -1,6 +1,5 @@
 services:
   sut:
-    container_name: client
     depends_on:
         - mongodb
         - mongo_seed
@@ -8,12 +7,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    tty: true
     ports:
       - 3000:3000
     volumes:
       - .:/app
       - /app/node_modules
+    networks:
+      - web
 
   mongodb:
     image: mongo
@@ -29,9 +29,21 @@ services:
       MONGODB_DATA_DIR: /data/db
     volumes:
       - ../database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - web
+
+  mongo_seed:
+    image: mongo
+    links:
+      - mongodb
+    networks:
+      - web
+    volumes:
+      - ../database:/database
+    command:
+      /bin/sh /database/import.sh
 
   app:
-    container_name: app
     # Configuration for building the docker image for the service
     build:
       context: ../src # Use an image built from the specified dockerfile in the current directory.
@@ -40,3 +52,8 @@ services:
       - 6868:6868 
       - 4200:4200
     restart: unless-stopped
+    networks:
+      - web # Networks to join (Services on the same network can communicate with each other using their name)
+
+networks:
+  web:
