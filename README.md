@@ -75,8 +75,6 @@ docker-compose logs app
 v15.12.0
 (master)⚡ % go version
 go version go1.16.2 linux/amd64
-
-
 ```
 
 #### /src/config.yml 
@@ -110,7 +108,6 @@ yarn & yarn start
 ```sh
 cd src/nav-app
 yarn & yarn start
-
 ```
 
 
@@ -130,8 +127,7 @@ ATT&CK® Navigator 新增的技术点
 
 # Refs
 
-- [Ten-Minutes-App](https://github.com/Kirk-Wang/Ten-Minutes-App)
-
+* [Ten-Minutes-App](https://github.com/Kirk-Wang/Ten-Minutes-App)
 * [mongo-go-dirver offical examples](https://github.com/mongodb/mongo-go-driver/blob/master/examples/documentation_examples/examples.go)
 * [Go by Example](https://gobyexample.com/)
 * [gotify/server](https://github.com/gotify/server)
