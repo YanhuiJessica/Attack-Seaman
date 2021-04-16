@@ -19,8 +19,6 @@ services:
     container_name: mongodb
     restart: unless-stopped
     command: mongod --auth
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: "attackSeaman"
       MONGO_INITDB_ROOT_PASSWORD: "cuccs1sgreat"
@@ -45,10 +43,7 @@ services:
 
   app:
     container_name: app
-    # Configuration for building the docker image for the service
-    build:
-      context: ./src # Use an image built from the specified dockerfile in the current directory.
-      dockerfile: Dockerfile
+    image: yanhui22/attack-seaman:latest
     ports:
       - 6868:6868 
       - 4200:4200
