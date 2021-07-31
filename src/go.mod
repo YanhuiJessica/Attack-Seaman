@@ -8,10 +8,12 @@ require (
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gotify/configor v1.0.2
 	github.com/gotify/server v1.2.1
+	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
-	github.com/satori/go.uuid v1.2.0 // indirect
+	github.com/satori/go.uuid v1.2.0
 	github.com/ugorji/go v1.2.4 // indirect
-	go.mongodb.org/mongo-driver v1.4.6
+	go.mongodb.org/mongo-driver v1.5.1
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
-	gopkg.in/yaml.v2 v2.2.8 // indirect
+	gopkg.in/yaml.v2 v2.2.8
 )
