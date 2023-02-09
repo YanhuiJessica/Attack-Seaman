@@ -3,7 +3,7 @@ module github.com/zGina/Attack-Seaman/src
 go 1.12
 
 require (
-	github.com/gin-gonic/gin v1.7.0
+	github.com/gin-gonic/gin v1.7.7
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gotify/configor v1.0.2
 	github.com/gotify/server v1.2.1
